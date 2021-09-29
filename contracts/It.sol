@@ -7,6 +7,7 @@ import "./ITag.sol";
 
 contract It is ERC721 {
     uint counter = 0;
+    uint transfers = 0;
     /// @dev Tag tokens minted when an It is transferred
     uint mintAmount = 420000000000000000000;
     /// @dev Tag tokens that must be burned to mint an It
@@ -26,9 +27,6 @@ contract It is ERC721 {
         ITag(erc20).burnFrom(msg.sender, burnAmount);
         counter++;
         super._safeMint(to, counter);
-        if (counter == 1337) {
-            mintAmount = 69000000000000000000;
-        }
     }
 
     function _beforeTokenTransfer(
@@ -53,6 +51,10 @@ contract It is ERC721 {
         super._transfer(from, to, tokenId);
         /// @dev reward transfer with tokens
         ITag(erc20).mint(from, mintAmount);
+        transfers++;
+        if (transfers == 1337) {
+            mintAmount = 69000000000000000000;
+        }
     }
 
 
