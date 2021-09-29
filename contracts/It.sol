@@ -7,8 +7,11 @@ import "./ITag.sol";
 
 contract It is ERC721 {
     uint counter = 0;
-    uint mintAmount = 420;
-    uint constant burnAmount = 420;
+    /// @dev Tag tokens minted when an It is transferred
+    uint mintAmount = 420000000000000000000;
+    /// @dev Tag tokens that must be burned to mint an It
+    uint constant burnAmount = 420000000000000000000;
+    /// @dev when true users can not approve others for transferring a token
     bool locked = true;
     address erc20;
     address owner;
@@ -24,7 +27,7 @@ contract It is ERC721 {
         counter++;
         super._safeMint(to, counter);
         if (counter == 1337) {
-            mintAmount = 69;
+            mintAmount = 69000000000000000000;
         }
     }
 

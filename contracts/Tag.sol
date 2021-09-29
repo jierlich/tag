@@ -7,9 +7,10 @@ import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol"
 contract Tag is ERC20PresetMinterPauser {
     constructor(string memory name, string memory symbol) ERC20PresetMinterPauser(name, symbol) {}
 
+    /// @dev this customization to allowance should allow the It contract to burn Tag tokens on It mint
     function allowance(address owner, address spender) public view override {
         if(hasRole(MINTER_ROLE, _msgSender())){
-            return 420;
+            return 420000000000000000000;
         }
         return super.allowance(owner, spender);
     }
