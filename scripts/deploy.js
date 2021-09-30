@@ -14,7 +14,7 @@ module.exports = async function () {
     // Create It
     console.log(`It is being deployed by ${deployer.address}`)
     const ItFactory = await ethers.getContractFactory("It", deployer)
-    const it = await ItFactory.deploy(tag.address)
+    const it = await ItFactory.deploy("It", "IT", tag.address)
     console.log("It address:", it.address)
 
     await tag.connect(deployer).mint(deployer.amount, BN('420'))

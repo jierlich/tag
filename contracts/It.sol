@@ -17,12 +17,12 @@ contract It is ERC721 {
     address erc20;
     address owner;
 
-    constructor(address _erc20) {
+    constructor(string memory _name, string memory _symbol, address _erc20) ERC721(_name, _symbol) {
         erc20 = _erc20;
         owner = msg.sender;
     }
 
-    function mint(address to) {
+    function mint(address to) public {
         require(counter < 10000, "Max mint reached");
         ITag(erc20).burnFrom(msg.sender, burnAmount);
         counter++;
@@ -31,9 +31,9 @@ contract It is ERC721 {
 
     function _beforeTokenTransfer(
         address from,
-        address to,
-        uint256 tokenId
-    ) internal override(ERC721) {
+        address /* to */,
+        uint256 /* tokenId */
+    ) internal override view {
         /// @dev this condition is true when minting
         if (from == address(0)) {
             return;
@@ -58,12 +58,12 @@ contract It is ERC721 {
     }
 
 
-    function setOwner (address _owner) {
+    function setOwner (address _owner) public {
         require(owner == msg.sender, 'Only owner can call this function');
         owner = _owner;
     }
 
-    function unlock () {
+    function unlock () public {
         require(owner == msg.sender, 'Only owner can call this function');
         locked = false;
     }
