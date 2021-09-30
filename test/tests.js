@@ -6,6 +6,7 @@ const { keccak256, toUtf8Bytes } = require("ethers/lib/utils")
 const BN = ethers.BigNumber.from
 // Note: The ether number can represent any 18 decimal token
 const oneEther = BN("1000000000000000000")
+const zero = BN("0")
 
 describe("Tag game", () => {
     beforeEach(async () => {
@@ -39,7 +40,10 @@ describe("Tag game", () => {
         )
     })
 
-    it('test case', async () => {
-
+    it('burns Tag upon It mint', async () => {
+        expect(await this.tag.balanceOf(this.signers[1].address)).to.equal(BN('420').mul(oneEther))
+        await this.it.connect(this.signers[1]).mint(this.signers[1].address)
+        expect(await this.tag.balanceOf(this.signers[1].address)).to.equal(zero)
+        expect(await this.it.ownerOf(1)).to.equal(this.signers[1].address)
     })
 })
