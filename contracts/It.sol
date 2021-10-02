@@ -6,16 +6,16 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./ITag.sol";
 
 contract It is ERC721 {
-    uint counter = 0;
-    uint transfers = 0;
+    uint public counter = 0;
+    uint public transfers = 0;
     /// @dev Tag tokens minted when an It is transferred
-    uint mintAmount = 420000000000000000000;
+    uint public nmintAmount = 420000000000000000000;
     /// @dev Tag tokens that must be burned to mint an It
     uint constant burnAmount = 420000000000000000000;
     /// @dev when true users can not approve others for transferring a token
-    bool locked = true;
-    address erc20;
-    address owner;
+    bool public locked = true;
+    address public erc20;
+    address public owner;
 
     constructor(string memory _name, string memory _symbol, address _erc20) ERC721(_name, _symbol) {
         erc20 = _erc20;
