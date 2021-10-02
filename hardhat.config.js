@@ -23,6 +23,13 @@ module.exports = {
     optimizer: {
       enabled: true,
       runs: 1_000_000
+    },
+    settings: {
+      outputSelection: {
+        "*": {
+          "*": ["storageLayout"]
+        }
+      }
     }
   },
   etherscan: {
