@@ -9,7 +9,7 @@ contract It is ERC721 {
     uint public counter = 0;
     uint public transfers = 0;
     /// @dev Tag tokens minted when an It is transferred
-    uint public nmintAmount = 420000000000000000000;
+    uint public mintAmount = 420000000000000000000;
     /// @dev Tag tokens that must be burned to mint an It
     uint constant burnAmount = 420000000000000000000;
     /// @dev when true users can not approve others for transferring a token
