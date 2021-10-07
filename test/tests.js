@@ -87,4 +87,31 @@ describe("Tag game", () => {
         )
         expect(await this.tag.balanceOf(this.signers[1].address)).to.equal(sixtyNine)
     })
+
+    it('blocks transferFroms until unlocked', async () => {
+        await this.it.connect(this.signers[1]).mint(this.signers[1].address)
+        await this.it.connect(this.signers[1]).approve(this.signers[2].address, 1)
+        await expect(
+            this.it.connect(this.signers[2]).transferFrom(
+                this.signers[1].address,
+                this.signers[4].address,
+                1
+            )
+        ).to.be.revertedWith('Only holder can transfer while locked')
+
+        await this.it.connect(this.signers[1]).transferFrom(
+            this.signers[1].address,
+            this.signers[4].address,
+            1
+        )
+
+        await this.it.connect(this.signers[0]).unlock()
+
+        await this.it.connect(this.signers[4]).approve(this.signers[1].address, 1)
+        await this.it.connect(this.signers[1]).transferFrom(
+            this.signers[4].address,
+            this.signers[3].address,
+            1
+        )
+    })
 })
