@@ -2,6 +2,8 @@ const { keccak256, toUtf8Bytes } = require("ethers/lib/utils")
 const { ethers } = require("hardhat");
 const BN = ethers.BigNumber.from
 
+const oneEther = BN("1000000000000000000")
+
 async function main() {
     const [ deployer ] = await ethers.getSigners();
 
@@ -17,7 +19,7 @@ async function main() {
     const it = await ItFactory.deploy("It", "IT", tag.address)
     console.log("It address:", it.address)
 
-    await tag.connect(deployer).mint(deployer.amount, BN('420'))
+    await tag.connect(deployer).mint(deployer.address, BN('420').mul(oneEther))
 
     // Give vault ERC20 minting permissions, revoke others from deployer
     const MINTER_ROLE = keccak256(toUtf8Bytes("MINTER_ROLE"))
