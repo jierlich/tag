@@ -114,4 +114,18 @@ describe("Tag game", () => {
             1
         )
     })
+
+    it('stops minting Tag after all Its exist', async () => {
+        await this.it.connect(this.signers[1]).mint(this.signers[1].address)
+        await this.it.setVariable('counter', 10000)
+
+        const prevBalance = await this.tag.balanceOf(this.signers[1].address)
+        await this.it.connect(this.signers[1]).transferFrom(
+            this.signers[1].address,
+            this.signers[2].address,
+            1
+        )
+
+        expect(await this.tag.balanceOf(this.signers[1].address)).to.equal(prevBalance)
+    })
 })

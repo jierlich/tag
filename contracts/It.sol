@@ -49,8 +49,10 @@ contract It is ERC721 {
         uint256 tokenId
     ) internal override {
         super._transfer(from, to, tokenId);
-        /// @dev reward transfer with tokens
-        ITag(erc20).mint(from, mintAmount);
+        /// @dev reward transfer with tokens if there are remaining Its to mint
+        if (counter < 10000) {
+            ITag(erc20).mint(from, mintAmount);
+        }
         transfers++;
         if (transfers == 1337) {
             mintAmount = 69000000000000000000;
