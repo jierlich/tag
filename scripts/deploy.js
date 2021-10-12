@@ -2,7 +2,7 @@ const { keccak256, toUtf8Bytes } = require("ethers/lib/utils")
 const { ethers } = require("hardhat");
 const BN = ethers.BigNumber.from
 
-module.exports = async function () {
+async function main() {
     const [ deployer ] = await ethers.getSigners();
 
     // Create Tag
@@ -34,5 +34,11 @@ module.exports = async function () {
         PAUSER_ROLE,
         deployer.address
     )
-    return { deployer, tag, it }
 }
+
+main()
+    .then(() => process.exit(0))
+    .catch(error => {
+        console.log(error)
+        process.exit(1)
+    })
