@@ -19,23 +19,49 @@ async function main() {
     const it = await ItFactory.deploy("It", "IT", tag.address)
     console.log("It address:", it.address)
 
-    await tag.connect(deployer).mint(deployer.address, BN('420').mul(oneEther))
+    console.log("Minting initial Tag tokens")
+    const mintTx = await tag.connect(deployer).mint(deployer.address, BN('420').mul(oneEther))
+    await mintTx.wait()
+    console.log(`Minted initial Tag tokens to ${deployer.address}`)
 
     // Give vault ERC20 minting permissions, revoke others from deployer
+    console.log("Granting and revoking roles")
     const MINTER_ROLE = keccak256(toUtf8Bytes("MINTER_ROLE"))
     const PAUSER_ROLE = keccak256(toUtf8Bytes("PAUSER_ROLE"))
     await tag.connect(deployer).grantRole(
         MINTER_ROLE,
         it.address
     )
-    tag.connect(deployer).renounceRole(
+    await tag.connect(deployer).renounceRole(
         MINTER_ROLE,
         deployer.address
     )
-    tag.connect(deployer).renounceRole(
+    const roleTx = await tag.connect(deployer).renounceRole(
         PAUSER_ROLE,
         deployer.address
     )
+
+    await roleTx.wait()
+    console.log("Role assignment complete")
+
+    const initialPlayers = [
+    ]
+
+    console.log("Sending Its to initial players")
+    for(const [index, player] of initialPlayers.entries()) {
+        console.log(player)
+        console.log(index)
+        const txA = await it.connect(deployer).mint(deployer.address)
+
+        await txA.wait()
+        const txB = await it.connect(deployer).transferFrom(
+            deployer.address,
+            player,
+            index + 1
+        )
+        await txB.wait()
+    }
+    console.log("Game successfully initialized!")
 }
 
 main()

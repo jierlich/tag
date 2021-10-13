@@ -14,7 +14,7 @@ module.exports = {
       accounts: [environment.deployerPK]
     },
     matic_mumbai: {
-      url: "https://rpc-mumbai.maticvigil.com",
+      url: `https://polygon-mumbai.g.alchemy.com/v2/${environment.alchemyAPIKey}`,
       accounts: [environment.deployerPK]
     }
   },
