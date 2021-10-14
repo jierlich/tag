@@ -10,7 +10,7 @@ module.exports = {
   networks: {
     hardhat: {},
     matic_mainnet: {
-      url: "https://rpc-mainnet.maticvigil.com",
+      url: `https://polygon-mainnet.g.alchemy.com/v2/${environment.alchemyAPIKey}`,
       accounts: [environment.deployerPK]
     },
     matic_mumbai: {
